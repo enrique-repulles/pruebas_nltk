@@ -62,11 +62,8 @@ def palabras_relevantes(text_collections):
 
     #Formato pandas
     series=[]
-    print("Inicio")
     for categoria in tf_idf_categorias.keys():
-        print(categoria)
         series.append(pd.Series(tf_idf_categorias[categoria],name=categoria))
-        print("siguiente")
     df=pd.concat(series,axis=1)
     return df
 
