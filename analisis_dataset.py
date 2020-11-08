@@ -17,6 +17,8 @@ print(top_n_words(df,30))
 
 
 
+
+
 dp.Report(
     dp.Markdown("# Ejemplo de la tabla"),
     dp.Table(df.sample()),
@@ -24,4 +26,4 @@ dp.Report(
     dp.Plot(df.news.hist()),
     dp.Plot(df.learned.hist()),
     dp.Plot(df.fiction.hist())
-).save(path='report.html', open=True)
+).save(path='output/report.html', open=True)
