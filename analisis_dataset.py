@@ -1,5 +1,6 @@
 import pandas as pd
 import datapane as dp
+import matplotlib
 
 df=pd.read_csv("data/dataset_tfidf.csv",index_col=0)
 
@@ -8,22 +9,27 @@ def top_n_words(df,n):
     ''' las N palabras más significativas **de cada categoria**. Luego se juntan todas. '''
     for category in df.columns:
         palabras_categoria=df[category].sort_values(ascending=False).head(n)
-        print(palabras_categoria.index)
         important_words.update(palabras_categoria.index)
     return important_words
 
 
 print(top_n_words(df,30))
 
+def name(output_filename):
+    ''' nombre para un fichero de salida'''
+    return "output/analisis_dataset/{}".format(output_filename)
 
 
+df.describe().to_csv(name("estadisticas.csv"))
+df.news.hist()
 
+matplotlib.pyplot.savefig(name("histograma_news.png"))
+matplotlib.pyplot.close()
 
-dp.Report(
-    dp.Markdown("# Ejemplo de la tabla"),
-    dp.Table(df.sample()),
-    dp.Markdown("# Histogramas de cada categoria"),
-    dp.Plot(df.news.hist()),
-    dp.Plot(df.learned.hist()),
-    dp.Plot(df.fiction.hist())
-).save(path='output/report.html', open=True)
+df.learned.hist()
+matplotlib.pyplot.savefig(name("histograma_learned.png"))
+matplotlib.pyplot.close()
+df.fiction.hist()
+matplotlib.pyplot.savefig(name("histograma_fiction.png"))
+matplotlib.pyplot.close()
+
